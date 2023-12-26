@@ -1,0 +1,9 @@
+
+/.gradle
+/.idea
+/.yarnrc
+/bundles
+**/node_modules
+/node_modules_cache
+/build
+**/build
