@@ -1,0 +1,13 @@
+assemble:
+    - from: build/static
+      into: static
+liferay-object-collection-filter-extension:
+    friendlyURLMapping: liferay-object-collection-filter-extension
+    htmlElementName: liferay-object-collection-filter-extension
+    instanceable: false
+    name: Liferay Object Collection Filter Extension
+    portletCategoryName: category.client-extensions
+    type: customElement
+    urls:
+        - js/main.*.js
+    useESM: true
