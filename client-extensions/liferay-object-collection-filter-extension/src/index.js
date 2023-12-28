@@ -5,12 +5,14 @@
 
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+import ModalComponent from './common/components/ModalComponent';
 
 const ObjectCollectionFilter = () => {
 
     return (
         <div>
             <h1> Liferay Object Collection Filter Extension </h1>
+            <ModalComponent/>
         </div>
     );
 }
