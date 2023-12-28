@@ -3,7 +3,7 @@ import ClayDropdown from "@clayui/drop-down";
 import ClayButton from "@clayui/button";
 import ClayDropDown from "@clayui/drop-down";
 
-const BooleanField = ({fieldName, fieldType, handleFilterChange = (property, type, values)=>{}}) => {
+const BooleanField = ({fieldName, fieldType, onUpdateFilter = ()=>{}}) => {
     const [show, setShow] = useState(false);
 
     const [item, setItem] = useState(null);
@@ -22,12 +22,17 @@ const BooleanField = ({fieldName, fieldType, handleFilterChange = (property, typ
         }
     ]
 
-    function handleChange(item) {
+    function handleChange({value}) {
         setShow(false);
-        handleFilterChange(fieldName, fieldType, [item.value]);
-        setItem(item);
-    }
 
+        if(value !== null) {
+            onUpdateFilter(fieldName, fieldType, [value]);
+
+            return;
+        }
+
+        onUpdateFilter(fieldName, null, null);
+    }
 
     return (
         <>
