@@ -1,23 +1,21 @@
 import React from 'react';
-import NumericField from "./NumericField";
-import BooleanField from "./BooleanField";
-import DateField from "./DateField";
-import './FilterInput.scss';
+import NumericField from './NumericField';
+import BooleanField from './BooleanField';
+import DateField from './DateField';
 
-const FilterInput = ({fieldName, fieldType}) => {
+const FilterInput = ({ fieldName, fieldType }) => {
+    const InputComponent = {
+        numeric: NumericField,
+        boolean: BooleanField,
+        date: DateField,
+    }[fieldType];
 
-    let input = null;
-    if (fieldType == 'numeric') {
-        input = <NumericField fieldName={fieldName} fieldType={fieldType}/>
-    } else if (fieldType == 'boolean') {
-        input = <BooleanField fieldName={fieldName} fieldType={fieldType}/>
-    } else if (fieldType == 'date') {
-        input = <DateField fieldName={fieldName}/>
-    }
     return (
         <div className="filter-input">
-            {input}
+            <label>{fieldName}</label>
+            {InputComponent && <InputComponent fieldName={fieldName} fieldType={fieldType} />}
         </div>
-    )
-}
-export default FilterInput
+    );
+};
+
+export default FilterInput;

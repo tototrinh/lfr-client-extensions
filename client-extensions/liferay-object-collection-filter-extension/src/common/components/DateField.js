@@ -5,18 +5,15 @@ const spritemap = `${window.Liferay.ThemeDisplay.getPathThemeImages()}/clay/icon
 const DateField = ({fieldName}) => {
 
     return (
-        <>
-            <label>{fieldName}</label>
-            <ClayDatePicker
-                placeholder="YYYY-MM-DD - YYYY-MM-DD"
-                range
-                spritemap={spritemap}
-                years={{
-                    end: 2024,
-                    start: 1997
-                }}
-            />
-        </>
+        <ClayDatePicker
+            placeholder="YYYY-MM-DD - YYYY-MM-DD"
+            range
+            spritemap={spritemap}
+            years={{
+                end: 2024,
+                start: 1997
+            }}
+        />
     )
 }
 export default DateField

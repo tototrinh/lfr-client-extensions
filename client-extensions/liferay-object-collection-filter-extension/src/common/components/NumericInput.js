@@ -1,7 +1,7 @@
 import React from 'react';
 import {ClayInput} from "@clayui/form";
-import './Input.scss';
-const Input = ({label, name}) => {
+
+const NumericInput = ({label, name}) => {
     return (
         <>
             <div className="w-100 input">
@@ -12,13 +12,13 @@ const Input = ({label, name}) => {
                     <ClayInput
                         aria-label={label}
                         id={name}
+                        value={0}
                         name={name}
-                        type="text"
+                        type="number"
                     />
                 </div>
             </div>
         </>
-
     )
 }
-export default Input
+export default NumericInput
