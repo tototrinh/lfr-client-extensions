@@ -17,6 +17,7 @@ const FilterSettings = ({ initialSettings, onSaveAndClose }) => {
         setObjectFields([
             { label: 'age', fieldName: 'age', fieldType: 'numeric' },
             { label: 'gender', fieldName: 'gender', fieldType: 'boolean' },
+            { label: 'date', fieldName: 'date', fieldType: 'date' }
         ]);
     }, []);
 

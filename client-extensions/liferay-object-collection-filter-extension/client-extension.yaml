@@ -10,4 +10,6 @@ liferay-object-collection-filter-extension:
     type: customElement
     urls:
         - js/main.*.js
+    cssURLs:
+        - css/main.*.css
     useESM: true
