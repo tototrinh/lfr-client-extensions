@@ -1,19 +1,19 @@
 import React from 'react';
-import NumericField from './NumericField';
-import BooleanField from './BooleanField';
-import DateField from './DateField';
+import BooleanField from './field/BooleanField';
+import DateField from "./field/DateField";
+import NumericField from "./field/NumericField";
 
-const FilterInput = ({ fieldName, fieldType }) => {
+const FilterInput = ({ fieldName, fieldType, onUpdateFilter }) => {
     const InputComponent = {
-        numeric: NumericField,
         boolean: BooleanField,
         date: DateField,
+        numeric: NumericField
     }[fieldType];
 
     return (
         <div className="filter-input">
             <label>{fieldName}</label>
-            {InputComponent && <InputComponent fieldName={fieldName} fieldType={fieldType} />}
+            {InputComponent && <InputComponent fieldName={fieldName} fieldType={fieldType} onUpdateFilter={onUpdateFilter} />}
         </div>
     );
 };

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import Select from 'react-select';
 
@@ -11,28 +11,13 @@ import FilterSettings from './common/components/FilterSettings';
 import FilterForm from './common/components/FilterForm';
 
 import './common/styles/index.scss';
+import Search from "./page/Search";
 
 const ObjectCollectionFilter = () => {
-    const [settings, setSettings] = useState({
-        selectedObject: null,
-        selectedFields: [],
-        selectableFields: []
-    });
-
-    const handleSettings = (newSettings) => {
-        setSettings((prevSettings) => ({
-            ...prevSettings,
-            ...newSettings,
-        }));
-    };
 
     return (
         <div>
-            <FilterSettings
-                 initialSettings={settings}
-                 onSettings={handleSettings}
-            />
-            <FilterForm selectedFields={settings.selectedFields} />
+            <Search />
         </div>
     );
 }

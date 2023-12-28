@@ -1,12 +1,12 @@
 import React from 'react';
 import FilterInput from "./FilterInput";
 
-const FilterForm = ({ selectedFields }) => {
+const FilterForm = ({ selectedFields, onUpdateFilter }) => {
     return (
         <div className="filter-list">
             {selectedFields.map((field) => (
                 <div className="d-inline-block">
-                    <FilterInput fieldName={field.fieldName} fieldType={field.fieldType}/>
+                    <FilterInput fieldName={field.value} fieldType={field.type} onUpdateFilter={onUpdateFilter}/>
                 </div>
             ))}
         </div>
