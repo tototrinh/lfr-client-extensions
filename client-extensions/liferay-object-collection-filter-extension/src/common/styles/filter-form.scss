@@ -1,6 +1,16 @@
+.filter-input {
+  margin: 10px;
+  width: 300px;
+}
+
+.clay-form-group{
+  margin: 10px;
+}
+
 .input {
   display: flex;
   justifyContent: space-around;
+  margin: 10px;
 
   label {
     margin: 10px;
