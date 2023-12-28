@@ -3,14 +3,35 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
+import FilterSettings from "./components/FilterSettings";
 
 const ObjectCollectionFilter = () => {
 
+    const [filterFields, setFilterFields] = useState(null);
+
+    function handleSettings() {
+        setFilterFields({
+            targetCollection: 'students',
+            fieldArray: [
+                {
+                    fieldName: 'age', fieldType: 'numeric'
+                },
+                {
+                    fieldName: 'gender', fieldType: 'boolean'
+                },
+                {
+                    fieldName: 'date', fieldType: 'date'
+                },
+            ]
+        })
+    }
+
     return (
         <div>
-            <h1> Liferay Object Collection Filter Extension </h1>
+            <FilterSettings settings={filterFields}/>
+            <button onClick={() => handleSettings()}> Save </button>
         </div>
     );
 }
@@ -28,5 +49,5 @@ class CustomElement extends HTMLElement {
 const ELEMENT_NAME = 'liferay-object-collection-filter-extension';
 
 if (!customElements.get(ELEMENT_NAME)) {
-	customElements.define(ELEMENT_NAME, CustomElement);
+    customElements.define(ELEMENT_NAME, CustomElement);
 }
