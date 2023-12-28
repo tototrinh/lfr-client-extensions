@@ -1,24 +1,27 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import React, { useState, useEffect } from 'react';
-import Select from 'react-select';
+import ClayButton from '@clayui/button';
+import ClayModal from '@clayui/modal';
+import { useModal } from '@clayui/modal';
+import ClayLayout from '@clayui/layout';
+import ObjectChosenDropButton from './SelectObjectDefinition';
+import FieldChosenDropButton from './SelectObjectFields';
 
 const FilterSettings = ({ initialSettings, onSaveAndClose }) => {
 
     const [settings, setSettings] = useState(initialSettings);
 
-    const [objects, setObjects] = useState([]);
-    const [objectFields, setObjectFields] = useState([]);
-
-    useEffect(() => {
-        // Simulate fetching data (replace with actual fetching logic)
-        setObjects([
-           { label: 'students', value: 'students'},
-           { label: 'teachers', value: 'teachers'},
-       ]);
-        setObjectFields([
-            { label: 'age', fieldName: 'age', fieldType: 'numeric' },
-            { label: 'gender', fieldName: 'gender', fieldType: 'boolean' },
-        ]);
-    }, []);
+    const { observer, onOpenChange, open } = useModal();
+    const [selectedData, setSelectedData] = React.useState(null);
+  
+    const [dataTargetCollectionKey, setTargetCollectionKey] = React.useState("");
+    const [dataFieldKey, setDataFieldKey] = React.useState(0);
+  
+    const [fieldChosenDropButtonValues, setFieldChosenDropButtonValues] = React.useState([]);
 
     const handleChange = (field, value) => {
         setSettings((prevSettings) => ({
@@ -31,25 +34,70 @@ const FilterSettings = ({ initialSettings, onSaveAndClose }) => {
         onSaveAndClose(settings);
     };
 
+    const handleSaveAndClose = (returnedObject) => {
+        console.log(returnedObject);
+        onSaveAndClose(settings);
+    };
+    
+    React.useEffect(() => {
+    setDataFieldKey((prevKey) => prevKey + 1);
+    }, [selectedData]);
+
+    const handleSave = () => {
+    const returnedObject = {
+        selectedObject: dataTargetCollectionKey,
+        selectedFields: fieldChosenDropButtonValues.map((value) => ({
+        fieldName: value.fieldName,
+        businessType: value.businessType, 
+        })),
+    };
+
+    onSaveAndClose(returnedObject);
+
+    onOpenChange(false);
+    };
+
     return (
-        <div className="settings-popup">
-            {/* TODO: Refactor. This is just an example.*/}
-            <h2>Settings</h2>
-            <Select
-                options={objects}
-                value={settings.selectedObject}
-                onChange={(object) => handleChange('selectedObject', object.value)}
+    <>
+        {open && (
+        <ClayModal observer={observer} size="lg" status="info">
+            <ClayModal.Header>Documents</ClayModal.Header>
+            <ClayModal.Body>
+            <p>Choose target collection</p>
+            <ClayLayout.Row>
+                <ClayLayout.Col>
+                <ObjectChosenDropButton onSelect={setSelectedData} onItem={setTargetCollectionKey} />
+                </ClayLayout.Col>
+                <ClayLayout.Col>
+                {selectedData && (
+                    <FieldChosenDropButton
+                    dataFieldKey={dataFieldKey}
+                    dataField={selectedData}
+                    onSelect={setFieldChosenDropButtonValues}
+                    />
+                )}
+                </ClayLayout.Col>
+            </ClayLayout.Row>
+            </ClayModal.Body>
+            <ClayModal.Footer
+            last={
+                <ClayButton.Group spaced>
+                <ClayButton
+                    displayType="secondary"
+                    onClick={() => onOpenChange(false)}
+                >
+                    Cancel
+                </ClayButton>
+                <ClayButton onClick={handleSave}>
+                    Save
+                </ClayButton>
+                </ClayButton.Group>
+            }
             />
-            {settings.selectedObject && (
-                <Select
-                    options={objectFields}
-                    isMulti
-                    value={settings.selectedFields}
-                    onChange={(fields) => handleChange('selectedFields', fields)}
-                />
-            )}
-            <button onClick={handleClose}>Save</button>
-        </div>
+        </ClayModal>
+        )}
+        <ClayButton onClick={() => onOpenChange(true)}>Open modal</ClayButton>
+    </>
     );
 }
 export default FilterSettings;

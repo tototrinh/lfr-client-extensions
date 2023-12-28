@@ -16,7 +16,13 @@
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "sass": "^1.66.1",
-    "react-select": "5.8.0"
+    "react-select": "5.8.0",
+    "@clayui/button":"3.107.0",
+    "@clayui/drop-down":"3.108.0",
+    "@clayui/form":"3.107.0",
+    "@clayui/layout": "3.106.1",
+    "@clayui/modal":"3.107.0",
+    "@clayui/multi-select":"3.108.0"
   },
   "name": "@liferay/liferay-object-collection-filter-extension",
   "private": true,
