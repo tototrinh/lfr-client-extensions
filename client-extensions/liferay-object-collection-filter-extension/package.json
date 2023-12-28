@@ -12,10 +12,21 @@
     ]
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "sass": "^1.66.1"
+		"@clayui/core": "3.108.0",
+		"@clayui/button": "3.92.0",
+		"@clayui/css": "3.98.0",
+		"@clayui/drop-down": "3.98.0",
+		"@clayui/form": "3.96.0",
+		"@clayui/icon": "3.106.1",
+		"@clayui/layout": "3.106.1",
+    "@clayui/loading-indicator": "3.106.1",
+		"@clayui/provider": "3.93.0",
+		"@clayui/list": "3.93.0",
+    "axios": "1.6.3",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-scripts": "5.0.1",
+		"sass": "^1.66.1"
   },
   "name": "@liferay/liferay-object-collection-filter-extension",
   "private": true,
