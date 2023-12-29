@@ -4,17 +4,28 @@
  */
 
 import {Liferay} from './liferay.js';
+import axios from 'axios'
 
 const {REACT_APP_LIFERAY_HOST = window.location.origin} = process.env;
 
-const baseFetch = async (url, options = {}) => {
-	return fetch(REACT_APP_LIFERAY_HOST + '/' + url, {
-		headers: {
-			'Content-Type': 'application/json',
-			'x-csrf-token': Liferay.authToken,
-		},
-		...options,
-	});
+const baseFetch = async (method = "GET", url, body = {}, options = {}) => {
+	try {
+		const response = await axios({
+			method,
+			url: `${REACT_APP_LIFERAY_HOST}/${url}`,
+			headers: {
+				'Content-Type': 'application/json',
+				'x-csrf-token': Liferay.authToken,
+				...options.headers,
+			},
+			data: body,
+			...options,
+		});
+
+		return response.data;
+	} catch (error) {
+		throw error; // Re-throw the error for further handling
+	}
 };
 
 export default baseFetch;

@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react';
 import ClayButton from '@clayui/button';
 import ClayDropdown from '@clayui/drop-down';
 import { fetchObjects } from '../services/objectDefinition';
+import { mapFieldType} from '../util/MapFieldTypeUtil';
 
 const SelectObjectDefinition = ({ selectedObject, onSelect }) => {
     const [data, setData] = useState([]);
@@ -26,11 +27,13 @@ const SelectObjectDefinition = ({ selectedObject, onSelect }) => {
     }, []);
 
     const handleSelect = (object) => {
+        const allowedTypes = ['numeric', 'boolean', 'date'];    
+
         const objectFields = Array.from(object.objectFields).map((field) => ({
             label: field.name,
             value: field.name,
-            type: field.type
-        }));
+            type: mapFieldType(field.type)
+        })).filter((item) => allowedTypes.includes(item.type));
 
         onSelect({
             selectedObject: {
