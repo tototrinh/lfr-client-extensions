@@ -4,43 +4,42 @@
  */
 
 import React, { useState } from 'react';
-import ClayButton from '@clayui/button';
-import DropDown from '@clayui/drop-down';
-import { ClayCheckbox } from '@clayui/form';
+import { ClayDualListBox } from '@clayui/form';
+import { spritemapPath } from '../services/liferay';
 
-const SelectObjectFields = ({ dataFieldKey, dataField, onSelect }) => {
-    const [selectedItems, setSelectedItems] = React.useState([]);
+const SelectObjectFields = ({ objectFields, selectedFields, onSelect }) => {
 
-    const handleCheckboxClick = (item) => {
-      const isSelected = selectedItems.some((selectedItem) => selectedItem.fieldName === item.name);
-  
-      const updatedSelection = isSelected
-        ? selectedItems.filter((selectedItem) => selectedItem.fieldName !== item.name)
-        : [...selectedItems, { fieldName: item.name, businessType: item.businessType }];
-  
-      setSelectedItems(updatedSelection);
-      onSelect(updatedSelection);
-    };
-  
+    const [available, setAvailable] = useState([]);
+    const [selected, setSelected] = useState([]);
+
+    const [items, setItems] = useState([selectedFields, objectFields.filter((field) => !selectedFields.includes(field))]);
+
+    const handleItemsChange = (items) => {
+        setItems(items);
+        onSelect({
+            selectedFields: items[0]
+        });
+    }
+
     return (
-      <DropDown key={dataFieldKey} filterKey="name" trigger={<ClayButton>Choose Fields</ClayButton>}>
-        <DropDown.ItemList items={dataField}>
-          {(item) => (
-            <DropDown.Item
-              key={item.name}
-              onClick={() => {
-                handleCheckboxClick(item);
-              }}
-            >
-              <ClayCheckbox
-                label={item.label.en_US}
-                checked={selectedItems.some((selectedItem) => selectedItem.fieldName === item.name)}
-              />
-            </DropDown.Item>
-          )}
-        </DropDown.ItemList>
-      </DropDown>
+        <ClayDualListBox
+            items={items}
+            left={{
+                label: "In Use",
+                onSelectChange: setSelected,
+                selected: selected
+            }}
+            onItemsChange={(items) => handleItemsChange(items)}
+            right={{
+                label: "Available",
+                onSelectChange: setAvailable,
+                selected: available
+            }}
+            size={10}
+            spritemap={spritemapPath}
+        />
     );
+
 };
 
 export default SelectObjectFields;
