@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ClayDropdown from "@clayui/drop-down";
 import ClayButton from "@clayui/button";
 import ClayDropDown from "@clayui/drop-down";
 
 const BooleanField = ({fieldName, fieldType, handleFilterChange = (property, type, values)=>{}}) => {
     const [show, setShow] = useState(false);
+
+    const [item, setItem] = useState(null);
     const items = [
         {
             label: 'None',
@@ -20,10 +22,12 @@ const BooleanField = ({fieldName, fieldType, handleFilterChange = (property, typ
         }
     ]
 
-    function handleChange(value) {
+    function handleChange(item) {
         setShow(false);
-        handleFilterChange(fieldName, fieldType, [value]);
+        handleFilterChange(fieldName, fieldType, [item.value]);
+        setItem(item);
     }
+
 
     return (
         <>
@@ -36,18 +40,18 @@ const BooleanField = ({fieldName, fieldType, handleFilterChange = (property, typ
                         displayType="secondary"
                         className="bg-light font-weight-normal form-control-select text-left w-100"
                     >
-                        {fieldType}
+                        {item ? item.label:"None"}
                     </ClayButton>
                 }
             >
                 <>
                     <ClayDropDown.ItemList>
-                        {items.map(({label, value}, index) => (
+                        {items.map((item, index) => (
                             <ClayDropDown.Item
                                 key={index}
-                                onClick={() => handleChange(value)}
+                                onClick={() => handleChange(item)}
                             >
-                                {label}
+                                {item.label}
                             </ClayDropDown.Item>
                         ))}
                     </ClayDropDown.ItemList>
