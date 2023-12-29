@@ -19,8 +19,8 @@ const NumericField = ({fieldName, fieldType}) => {
             }
         >
             <div>
-                <NumericInput name="min" label="Min"/>
-                <NumericInput name="max" label="Max"/>
+                <NumericInput name="min" label="Min" fieldName={fieldName} fieldType={fieldType}/>
+                <NumericInput name="max" label="Max" fieldName={fieldName} fieldType={fieldType}/>
             </div>
         </ClayDropdown>
     )
