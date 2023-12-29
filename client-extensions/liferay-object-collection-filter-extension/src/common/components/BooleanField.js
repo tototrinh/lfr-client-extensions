@@ -1,17 +1,10 @@
 import React, {useState} from 'react';
 import ClayDropdown from "@clayui/drop-down";
 import ClayButton from "@clayui/button";
-import ClayForm, {ClayCheckbox} from "@clayui/form";
 import ClayDropDown from "@clayui/drop-down";
 
-const BooleanField = ({fieldName, fieldType}) => {
-
-    const [checked, setChecked] = useState({label: 'None', value: null});
-
-    const [filters, setFilters] = useState([]);
-
-    const [booleanField, setBooleanField] = useState(null);
-
+const BooleanField = ({fieldName, fieldType, handleFilterChange = (property, type, values)=>{}}) => {
+    const [show, setShow] = useState(false);
     const items = [
         {
             label: 'None',
@@ -28,25 +21,16 @@ const BooleanField = ({fieldName, fieldType}) => {
     ]
 
     function handleChange(value) {
-        let index = getIndex(fieldName);
-        if (index === -1) {
-            setFilters([...filters, {type: fieldType, property: fieldName, values: [value]}]);
-        } else {
-            let newFilters = [...filters];
-            newFilters[index] = {type: fieldType, property: fieldName, values: [value]}
-            setFilters(newFilters);
-        }
-
-    }
-
-    function getIndex(fieldName) {
-        return filters.findIndex(obj => obj.property === fieldName);
+        setShow(false);
+        handleFilterChange(fieldName, fieldType, [value]);
     }
 
     return (
         <>
             <ClayDropdown
                 className="dropdown-menu-width-shrink"
+                active={show}
+                onActiveChange={setShow}
                 trigger={
                     <ClayButton
                         displayType="secondary"
