@@ -33,7 +33,10 @@ const SelectObjectDefinition = ({ selectedObject, onSelect }) => {
         }));
 
         onSelect({
-            selectedObject: object.name,
+            selectedObject: {
+                name: object.name,
+                restContextPath: object.restContextPath
+            },
             selectableFields: objectFields
         });
 
@@ -49,7 +52,7 @@ const SelectObjectDefinition = ({ selectedObject, onSelect }) => {
             displayType="secondary"
             className="bg-light font-weight-normal form-control-select text-left w-100"
             >
-                {selectedObject || 'Select Object'}
+                {selectedObject?.name || 'Select Object'}
             </ClayButton>
             }
             onActiveChange={(newActiveState) => setActive(newActiveState)}

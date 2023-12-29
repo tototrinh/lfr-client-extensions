@@ -14,7 +14,7 @@ import './common/styles/index.scss';
 
 const ObjectCollectionFilter = () => {
     const [settings, setSettings] = useState({
-        selectedObject: '',
+        selectedObject: null,
         selectedFields: [],
         selectableFields: []
     });
