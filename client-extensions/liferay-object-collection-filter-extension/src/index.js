@@ -13,14 +13,13 @@ import FilterForm from './common/components/FilterForm';
 import './common/styles/index.scss';
 
 const ObjectCollectionFilter = () => {
-    const [showSettings, setShowSettings] = useState(false);
     const [settings, setSettings] = useState({
         selectedObject: '',
         selectedFields: [],
+        selectableFields: []
     });
 
-    const handleSettingsClose = (newSettings) => {
-        setShowSettings(false);
+    const handleSettings = (newSettings) => {
         setSettings((prevSettings) => ({
             ...prevSettings,
             ...newSettings,
@@ -29,14 +28,10 @@ const ObjectCollectionFilter = () => {
 
     return (
         <div>
-            <button onClick={() => setShowSettings(true)}>Settings</button>
-            {showSettings &&
-                <FilterSettings
-                     initialSettings={settings}
-                     onSaveAndClose={handleSettingsClose}
-                />
-            }
-
+            <FilterSettings
+                 initialSettings={settings}
+                 onSettings={handleSettings}
+            />
             <FilterForm selectedFields={settings.selectedFields} />
         </div>
     );

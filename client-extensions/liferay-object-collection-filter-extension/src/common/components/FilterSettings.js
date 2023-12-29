@@ -7,84 +7,68 @@ import React, { useState, useEffect } from 'react';
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 import { useModal } from '@clayui/modal';
-import ClayLayout from '@clayui/layout';
-import ObjectChosenDropButton from './SelectObjectDefinition';
-import FieldChosenDropButton from './SelectObjectFields';
+import SelectObjectDefinition from './SelectObjectDefinition';
+import SelectObjectFields from './SelectObjectFields';
 
-const FilterSettings = ({ initialSettings, onSaveAndClose }) => {
+const FilterSettings = ({ initialSettings, onSettings }) => {
+
+    const { observer, onOpenChange, open } = useModal();
 
     const [settings, setSettings] = useState(initialSettings);
 
-    const { observer, onOpenChange, open } = useModal();
-    const [selectedData, setSelectedData] = React.useState(null);
-  
-    const [dataTargetCollectionKey, setTargetCollectionKey] = React.useState("");
-    const [dataFieldKey, setDataFieldKey] = React.useState(0);
-  
-    const [fieldChosenDropButtonValues, setFieldChosenDropButtonValues] = React.useState([]);
-
-    const handleChange = (field, value) => {
+    const handleChange = (changes) => {
         setSettings((prevSettings) => ({
             ...prevSettings,
-            [field]: value,
+            ...changes,
         }));
     };
 
-    const handleClose = () => {
-        onSaveAndClose(settings);
-    };
-
-    const handleSaveAndClose = (returnedObject) => {
-        console.log(returnedObject);
-        onSaveAndClose(settings);
-    };
-    
-    React.useEffect(() => {
-    setDataFieldKey((prevKey) => prevKey + 1);
-    }, [selectedData]);
-
     const handleSave = () => {
-    const returnedObject = {
-        selectedObject: dataTargetCollectionKey,
-        selectedFields: fieldChosenDropButtonValues.map((value) => ({
-        fieldName: value.fieldName,
-        businessType: value.businessType, 
-        })),
+        onSettings(settings);
+        onOpenChange(false);
     };
 
-    onSaveAndClose(returnedObject);
-
-    onOpenChange(false);
-    };
+    const handleClose = () => {
+        handleChange(initialSettings);
+        onOpenChange(false);
+    }
 
     return (
     <>
         {open && (
         <ClayModal observer={observer} size="lg" status="info">
-            <ClayModal.Header>Documents</ClayModal.Header>
+            <ClayModal.Header>Settings</ClayModal.Header>
             <ClayModal.Body>
-            <p>Choose target collection</p>
-            <ClayLayout.Row>
-                <ClayLayout.Col>
-                <ObjectChosenDropButton onSelect={setSelectedData} onItem={setTargetCollectionKey} />
-                </ClayLayout.Col>
-                <ClayLayout.Col>
-                {selectedData && (
-                    <FieldChosenDropButton
-                    dataFieldKey={dataFieldKey}
-                    dataField={selectedData}
-                    onSelect={setFieldChosenDropButtonValues}
-                    />
-                )}
-                </ClayLayout.Col>
-            </ClayLayout.Row>
+                <div class="sheet-section">
+                    <div class="form-group">
+                        <label class="text-4">
+                            Select Target Object
+                        </label>
+                        <SelectObjectDefinition
+                            selectedObject={settings.selectedObject}
+                            selectedFields={settings.selectedFields}
+                            onSelect={handleChange}
+                        />
+                    </div>
+
+                    {settings.selectedObject && (
+                        <div class="form-group">
+                            <label class="text-4">Select Filter Fields</label>
+                            <SelectObjectFields
+                                selectedFields={settings.selectedFields}
+                                objectFields={settings.selectableFields}
+                                onSelect={handleChange}
+                            />
+                        </div>
+                    )}
+                </div>
             </ClayModal.Body>
             <ClayModal.Footer
             last={
                 <ClayButton.Group spaced>
                 <ClayButton
                     displayType="secondary"
-                    onClick={() => onOpenChange(false)}
+                    onClick={handleClose}
                 >
                     Cancel
                 </ClayButton>
@@ -96,7 +80,7 @@ const FilterSettings = ({ initialSettings, onSaveAndClose }) => {
             />
         </ClayModal>
         )}
-        <ClayButton onClick={() => onOpenChange(true)}>Open modal</ClayButton>
+        <ClayButton onClick={() => onOpenChange(true)}>Settings</ClayButton>
     </>
     );
 }

@@ -5,13 +5,13 @@
 
 import React, { useState, useEffect } from 'react';
 import ClayButton from '@clayui/button';
-import DropDown from '@clayui/drop-down';
+import ClayDropdown from '@clayui/drop-down';
 import { fetchObjects } from '../services/objectDefinition';
 
-const SelectObjectDefinition = ({ onSelect, onItem }) => {
-    const [data, setData] = React.useState([]);
-    const [active, setActive] = React.useState(false); 
-  
+const SelectObjectDefinition = ({ selectedObject, onSelect }) => {
+    const [data, setData] = useState([]);
+    const [active, setActive] = useState(false);
+
     useEffect(() => {
       const fetchData = async () => {
         try {
@@ -24,30 +24,47 @@ const SelectObjectDefinition = ({ onSelect, onItem }) => {
   
       fetchData();
     }, []);
+
+    const handleSelect = (object) => {
+        const objectFields = Array.from(object.objectFields).map((field) => ({
+            label: field.name,
+            value: field.name,
+            type: field.type
+        }));
+
+        onSelect({
+            selectedObject: object.name,
+            selectableFields: objectFields
+        });
+
+        setActive(false);
+    };
   
     return (
-      <DropDown
-        filterKey="name"
-        trigger={<ClayButton>Choose Object</ClayButton>}
-        active={active} 
-        onActiveChange={(newActiveState) => setActive(newActiveState)} 
-      >
-        <DropDown.ItemList items={data}>
-          {(item) => (
-            <DropDown.Item
-              key={item.name}
-              onClick={() => {
-                const arrayFromObjectFields = Array.from(item.objectFields);
-                onSelect(arrayFromObjectFields);
-                onItem(item.name);
-                setActive(false);
-              }}
+        <ClayDropdown
+            className="dropdown-menu-width-shrink"
+            filterKey="name"
+            trigger={
+            <ClayButton
+            displayType="secondary"
+            className="bg-light font-weight-normal form-control-select text-left w-100"
             >
-              {item.name}
-            </DropDown.Item>
-          )}
-        </DropDown.ItemList>
-      </DropDown>
+                {selectedObject || 'Select Object'}
+            </ClayButton>
+            }
+            onActiveChange={(newActiveState) => setActive(newActiveState)}
+        >
+            <ClayDropdown.ItemList items={data}>
+                {(item) => (
+                    <ClayDropdown.Item
+                    key={item.name}
+                    onClick={() => handleSelect(item)}
+                    >
+                        {item.name}
+                    </ClayDropdown.Item>
+                )}
+            </ClayDropdown.ItemList>
+        </ClayDropdown>
     );
 };
 
