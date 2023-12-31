@@ -5,7 +5,6 @@
 
 import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
-import Select from 'react-select';
 
 import FilterSettings from './common/components/FilterSettings';
 import FilterForm from './common/components/FilterForm';

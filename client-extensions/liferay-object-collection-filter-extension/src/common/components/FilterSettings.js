@@ -4,83 +4,71 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import ClayButton from '@clayui/button';
+import ClayAlert from '@clayui/alert';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayModal from '@clayui/modal';
 import { useModal } from '@clayui/modal';
+import FilterSettingsModal from './FilterSettingsModal';
 import SelectObjectDefinition from './SelectObjectDefinition';
 import SelectObjectFields from './SelectObjectFields';
+import { spritemapPath } from '../services/liferay';
 
-const FilterSettings = ({ initialSettings, onSettings }) => {
+const FilterSettings = ({ settings, onSettings }) => {
 
     const { observer, onOpenChange, open } = useModal();
+    const [ selectedObject, setSelectedObject ] = useState(settings.selectedObject);
 
-    const [settings, setSettings] = useState(initialSettings);
-
-    const handleChange = (changes) => {
-        setSettings((prevSettings) => ({
-            ...prevSettings,
-            ...changes,
-        }));
-    };
-
-    const handleSave = () => {
-        onSettings(settings);
+    const handleSave = (newSettings) => {
+        onSettings(newSettings);
+        setSelectedObject(newSettings.selectedObject);
         onOpenChange(false);
     };
 
     const handleClose = () => {
-        handleChange(initialSettings);
         onOpenChange(false);
     }
 
     return (
     <>
-        {open && (
-        <ClayModal observer={observer} size="lg" status="info">
-            <ClayModal.Header>Settings</ClayModal.Header>
-            <ClayModal.Body>
-                <div class="sheet-section">
-                    <div class="form-group">
-                        <label class="text-4">
-                            Select Target Object
-                        </label>
-                        <SelectObjectDefinition
-                            selectedObject={settings.selectedObject}
-                            selectedFields={settings.selectedFields}
-                            onSelect={handleChange}
-                        />
-                    </div>
-
-                    {settings.selectedObject && (
-                        <div class="form-group">
-                            <label class="text-4">Select Filter Fields</label>
-                            <SelectObjectFields
-                                selectedFields={settings.selectedFields}
-                                objectFields={settings.selectableFields}
-                                onSelect={handleChange}
-                            />
-                        </div>
-                    )}
-                </div>
-            </ClayModal.Body>
-            <ClayModal.Footer
-            last={
-                <ClayButton.Group spaced>
-                <ClayButton
-                    displayType="secondary"
-                    onClick={handleClose}
-                >
-                    Cancel
-                </ClayButton>
-                <ClayButton onClick={handleSave}>
-                    Save
-                </ClayButton>
-                </ClayButton.Group>
-            }
+        {open ? (
+            <FilterSettingsModal
+                observer={observer}
+                initialSettings={settings}
+                onSave={handleSave}
+                onClose={() => onOpenChange(false)}
             />
-        </ClayModal>
+        ) : selectedObject ? (
+            <div className="form-group">
+                <h3 class="autofit-row sheet-subtitle">
+                    <span class="autofit-col autofit-col-expand">
+                        <span class="heading-text">{selectedObject.name}</span>
+                    </span>
+                    <span class="autofit-col">
+                        <span class="">
+                            <ClayButtonWithIcon
+                                aria-label="Settings"
+                                spritemap={spritemapPath}
+                                symbol="cog"
+                                title="Settings"
+                                displayType="secondary"
+                                onClick={() => onOpenChange(true)}
+                            />
+                        </span>
+                    </span>
+                </h3>
+            </div>
+        ) : (
+            <ClayAlert displayType="info" spritemap={spritemapPath} title="Info">
+                <span>This application is not visible to users yet. </span>
+                <ClayButton
+                    className="btn-sm align-baseline border-0 p-0"
+                    onClick={() => onOpenChange(true)}
+                    displayType="link"
+                >
+                    Settings
+                </ClayButton>
+            </ClayAlert>
         )}
-        <ClayButton onClick={() => onOpenChange(true)}>Settings</ClayButton>
     </>
     );
 }

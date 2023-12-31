@@ -6,15 +6,15 @@
 import api from './api.js';
 
 const fetchObjects = async () => {
-  try {
-    const {items} = await api("GET", 'o/object-admin/v1.0/object-definitions');
+    try {
+        const {items} = await api("GET", 'o/object-admin/v1.0/object-definitions');
 
-    const filteredItems = items.filter((item) => item.system === false);
-    return filteredItems;
-  } catch (error) {
-    console.error('Error fetching objects:', error);
-    throw error;
-  }
+        const filteredItems = items.filter((item) => item.system === false);
+        return filteredItems;
+    } catch (error) {
+        console.error('Error fetching objects:', error);
+        throw error;
+    }
 };
 
 export { fetchObjects };

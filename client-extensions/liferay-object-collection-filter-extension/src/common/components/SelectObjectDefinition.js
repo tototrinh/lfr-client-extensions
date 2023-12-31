@@ -40,6 +40,7 @@ const SelectObjectDefinition = ({ selectedObject, onSelect }) => {
                 name: object.name,
                 restContextPath: object.restContextPath
             },
+            selectedFields: [],
             selectableFields: objectFields
         });
 

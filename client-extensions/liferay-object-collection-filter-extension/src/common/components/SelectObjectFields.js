@@ -3,14 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ClayDualListBox } from '@clayui/form';
 import { spritemapPath } from '../services/liferay';
 
-const SelectObjectFields = ({ objectFields, selectedFields, onSelect }) => {
-
-    const [available, setAvailable] = useState([]);
-    const [selected, setSelected] = useState([]);
+const SelectObjectFields = ({ selectedFields, objectFields, onSelect }) => {
 
     const [items, setItems] = useState([selectedFields, objectFields.filter((field) => !selectedFields.includes(field))]);
 
@@ -21,21 +18,24 @@ const SelectObjectFields = ({ objectFields, selectedFields, onSelect }) => {
         });
     }
 
+    useEffect(() => {
+        const availableFields = objectFields.filter((field) => !selectedFields.includes(field));
+
+        setItems([selectedFields, availableFields]);
+
+    }, [objectFields, selectedFields]);
+
     return (
         <ClayDualListBox
             items={items}
             left={{
                 label: "In Use",
-                onSelectChange: setSelected,
-                selected: selected
             }}
-            onItemsChange={(items) => handleItemsChange(items)}
+            onItemsChange={handleItemsChange}
             right={{
                 label: "Available",
-                onSelectChange: setAvailable,
-                selected: available
             }}
-            size={objectFields.length}
+            size={8}
             spritemap={spritemapPath}
         />
     );
