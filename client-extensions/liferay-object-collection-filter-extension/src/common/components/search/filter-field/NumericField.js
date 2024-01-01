@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import ClayDropdown from "@clayui/drop-down";
 import ClayButton from "@clayui/button";
-import NumericItem from "../item/NumericItem";
+import NumericItem from "./item/NumericItem";
 
 const NumericField = ({fieldName, fieldType, onUpdateFilter}) => {
     const [min, setMin] = useState(0);

@@ -5,7 +5,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { ClayDualListBox } from '@clayui/form';
-import { spritemapPath } from '../services/liferay';
+import { spritemapPath } from '../../services/liferay';
 
 const SelectObjectFields = ({ selectedFields, objectFields, onSelect }) => {
 

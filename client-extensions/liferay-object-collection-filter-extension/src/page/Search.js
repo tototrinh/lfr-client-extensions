@@ -1,15 +1,21 @@
 import React,  { useState, useEffect, Suspense } from 'react';
+
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
-
-import SearchResult from '../common/components/search/SearchResult';
-import SearchInput from '../common/components/search/SearchInput';
+import { spritemapPath } from '../common/services/liferay';
+import {
+  DEFAULT_DELTA,
+  DEFAULT_LABEL_DELTAS,
+  DEFAULT_PAGE,
+  DEFAULT_TOTAL,
+} from '../common/util/constants';
 import { findObject } from '../common/services/object';
-import FilterSettings from "../common/components/FilterSettings";
-import FilterForm from "../common/components/FilterForm";
-import {DEFAULT_DELTA, DEFAULT_LABEL_DELTAS, DEFAULT_PAGE, DEFAULT_TOTAL} from "../common/util/constants";
-import {spritemapPath} from "../common/services/liferay";
+
+import FilterForm from "../common/components/search/FilterForm";
+import SearchResult from '../common/components/search/SearchResult';
+import Keywords from '../common/components/search/Keywords';
+import FilterSettings from "../common/components/setting/FilterSettings";
 
 const Search = () => {
 
@@ -101,7 +107,7 @@ const Search = () => {
                         />
                         {settings.selectedObject && (
                             <>
-                                <SearchInput handleSearchChange={handleSearchKeywordChange} handleSearchSubmit={handleSearch}/>
+                                <Keywords handleSearchChange={handleSearchKeywordChange} handleSearchSubmit={handleSearch}/>
                                 <div class="form-group">
                                     <FilterForm selectedFields={settings.selectedFields} onUpdateFilter={handleFilterChange}/>
                                 </div>
@@ -109,7 +115,7 @@ const Search = () => {
                                 {searchResults?.length === 0 && <p>No results found </p>}
                                 {searchResults?.length > 0 &&
                                     <>
-                                        <SearchResult items={searchResults}/>
+                                        <SearchResult columnHeaders={settings.selectedObject.objectFields} items={searchResults}/>
                                         <ClayPaginationBarWithBasicItems
                                             activeDelta={delta}
                                             active={page}

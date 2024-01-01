@@ -29,14 +29,14 @@ export const buildParams = (keywords = "", filters = [],page = -1, pageSize = -1
     urlSearchParams.append("filter", getFilter(filters));
 
     if(page >= 0) {
-        urlSearchParams.append("page", page)
+        urlSearchParams.append("?page", page)
     }
 
     if(pageSize >= 0) {
-        urlSearchParams.append('pageSize', pageSize)
+        urlSearchParams.append('?pageSize', pageSize)
     }
 
-    urlSearchParams.append("search", keywords);
+    urlSearchParams.append("?search", keywords);
 
     return urlSearchParams.toString().replaceAll("+", "%20");
 };

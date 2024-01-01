@@ -9,6 +9,8 @@ export const Liferay = window.Liferay || {
 		isSignedIn: () => {
 			return false;
 		},
+		getLanguageId: () => 'en_US',
+		getDefaultLanguageId: () => 'en_US',
 	},
 	authToken: '',
 };

@@ -3,7 +3,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from "@clayui/icon";
 import { spritemapPath } from "../../services/liferay";
 
-const SearchInput = ({handleSearchChange, handleSearchSubmit}) => {
+const Keywords = ({handleSearchChange, handleSearchSubmit}) => {
 	return (
 		<ClayForm.Group>
 			<ClayInput.Group>
@@ -20,4 +20,4 @@ const SearchInput = ({handleSearchChange, handleSearchSubmit}) => {
 	);
 };
 
-export default SearchInput;
+export default Keywords;

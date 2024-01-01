@@ -11,7 +11,7 @@ import { useModal } from '@clayui/modal';
 import ClayIcon from '@clayui/icon';
 import SelectObjectDefinition from './SelectObjectDefinition';
 import SelectObjectFields from './SelectObjectFields';
-import { spritemapPath } from '../services/liferay';
+import { spritemapPath } from '../../services/liferay';
 
 const FilterSettingsModal = ({ observer, initialSettings, onSave, onClose }) => {
 

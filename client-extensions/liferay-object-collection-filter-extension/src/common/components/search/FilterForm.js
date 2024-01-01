@@ -6,7 +6,7 @@ const FilterForm = ({ selectedFields, onUpdateFilter }) => {
         <div className="filter-list">
             {selectedFields.map((field) => (
                 <div className="d-inline-block">
-                    <FilterInput fieldName={field.value} fieldType={field.type} onUpdateFilter={onUpdateFilter}/>
+                    <FilterInput fieldLabel={field.label} fieldName={field.value} fieldType={field.type} onUpdateFilter={onUpdateFilter}/>
                 </div>
             ))}
         </div>

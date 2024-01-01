@@ -6,10 +6,8 @@
 import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 
-import FilterSettings from './common/components/FilterSettings';
-import FilterForm from './common/components/FilterForm';
-
 import './common/styles/index.scss';
+
 import Search from "./page/Search";
 
 const ObjectCollectionFilter = () => {
