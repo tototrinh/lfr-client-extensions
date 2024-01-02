@@ -58,9 +58,11 @@ const Search = () => {
 
 			setSearchResults(items);
 			setTotal(totalCount);
-			if(resetPage) {
+
+			if (resetPage) {
 				setPage(DEFAULT_PAGE)
 			}
+
 			setError(null);
 		} catch (error) {
 			setError(error.message);
@@ -79,7 +81,7 @@ const Search = () => {
 	const handleFilterChange =(property, type, values) => {
 		const newFilters = filters.filter((filter) => filter.property !== property);
 
-		if(type && values?.length > 0) {
+		if (type && values?.length > 0) {
 			setFilters(prevState => [...newFilters, {
 				property: property,
 				type: type,
@@ -90,15 +92,27 @@ const Search = () => {
 		}
 	};
 
-	const resetFilter = () => {
+	const clearAll = () => {
 		setFilters([]);
+		setSearchKeyword('');
+		setPage(DEFAULT_PAGE);
 	}
 
 	useEffect(() => {
-		if(url !== '') {
-			handleSearch()
+		if (url !== '') {
+			handleSearch();
 		}
 	}, [delta, page, filters, url]);
+
+    useEffect(() => {
+        const delayDebounceFn = setTimeout(() => {
+            if (url !== '') {
+                handleSearch();
+            }
+        }, 1000)
+
+        return () => clearTimeout(delayDebounceFn)
+    }, [searchKeyword]);
 
 	return (
 		<div>
@@ -111,11 +125,11 @@ const Search = () => {
                         />
                         {settings.selectedObject && (
                             <>
-                                <Keywords handleSearchChange={handleSearchKeywordChange} handleSearchSubmit={handleSearch}/>
-                                <div class="form-group">
+                                <Keywords handleChange={handleSearchKeywordChange} keywords={searchKeyword}/>
+                                <div className="form-group">
                                     <FilterForm selectedFields={settings.selectedFields} onUpdateFilter={handleFilterChange} filters={filters}/>
-                                    <div class="d-flex justify-content-end">
-                                        <ClayButton displayType="link" onClick={resetFilter}>
+                                    <div className="d-flex justify-content-end">
+                                        <ClayButton displayType="link" onClick={clearAll}>
                                             Clear All
                                         </ClayButton>
                                     </div>

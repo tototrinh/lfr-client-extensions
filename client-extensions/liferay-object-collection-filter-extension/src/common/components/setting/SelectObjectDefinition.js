@@ -12,13 +12,15 @@ import {SUPPORTED_FIELD_TYPES} from "../../util/constants";
 
 const SelectObjectDefinition = ({ selectedObject, onSelect, setObjectFields }) => {
     const [data, setData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const [active, setActive] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-            const result = await fetchObjects();
+                const result = await fetchObjects();
                 setData(result);
+                setIsLoading(false);
             } catch (error) {
                 console.error('Error fetching objects:', error);
             }
@@ -60,34 +62,40 @@ const SelectObjectDefinition = ({ selectedObject, onSelect, setObjectFields }) =
     };
 
     return (
-        <ClayDropdown
-            className="dropdown-menu-width-shrink"
-            filterKey="name"
-            trigger={
-                <ClayButton
-                displayType="secondary"
-                className="bg-light font-weight-normal form-control-select text-left w-100"
+        <div>
+            {isLoading ? (
+                <p>Loading data...</p>
+            ) : (
+                <ClayDropdown
+                    className="dropdown-menu-width-shrink"
+                    filterKey="name"
+                    trigger={
+                        <ClayButton
+                        displayType="secondary"
+                        className="bg-light font-weight-normal form-control-select text-left w-100"
+                        >
+                            {selectedObject?.name || 'Select Object'}
+                        </ClayButton>
+                    }
+                    onActiveChange={(newActiveState) => setActive(newActiveState)}
                 >
-                    {selectedObject?.name || 'Select Object'}
-                </ClayButton>
-            }
-            onActiveChange={(newActiveState) => setActive(newActiveState)}
-        >
-            <ClayDropdown.ItemList items={data}>
-                {(item) => (
-                    <ClayDropdown.Item
-                    key={item.name}
-                    onClick={() => handleSelect(item)}
-                    >
-                        {getLocalizeLabel(
-                             item.defaultLanguageId,
-                             item.label,
-                             item.name
+                    <ClayDropdown.ItemList items={data}>
+                        {(item) => (
+                            <ClayDropdown.Item
+                            key={item.name}
+                            onClick={() => handleSelect(item)}
+                            >
+                                {getLocalizeLabel(
+                                     item.defaultLanguageId,
+                                     item.label,
+                                     item.name
+                                )}
+                            </ClayDropdown.Item>
                         )}
-                    </ClayDropdown.Item>
-                )}
-            </ClayDropdown.ItemList>
-        </ClayDropdown>
+                    </ClayDropdown.ItemList>
+                </ClayDropdown>
+            )}
+        </div>
     );
 };
 

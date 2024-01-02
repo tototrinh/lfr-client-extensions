@@ -9,10 +9,6 @@ const BooleanField = ({fieldName, fieldType, onUpdateFilter = ()=>{}, value}) =>
     const [item, setItem] = useState(null);
     const items = [
         {
-            label: 'None',
-            value: null
-        },
-        {
             label: 'True',
             value: true
         },

@@ -59,7 +59,7 @@ const FilterSettings = ({ settings, onSettings }) => {
             </div>
         ) : (
             <ClayAlert displayType="info" spritemap={spritemapPath} title="Info">
-                <span>This application is not visible to users yet. </span>
+                <span>This application is not visible yet. Please define your filtering criteria in  </span>
                 <ClayButton
                     className="btn-sm align-baseline border-0 p-0"
                     onClick={() => onOpenChange(true)}

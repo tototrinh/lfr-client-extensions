@@ -34,8 +34,8 @@ const FilterSettingsModal = ({ observer, initialSettings, onSave, onClose }) => 
             <ClayModal observer={observer} size="lg" status="info">
                 <ClayModal.Header>Settings</ClayModal.Header>
                 <ClayModal.Body>
-                    <div class="sheet-section">
-                        <div class="form-group">
+                    <div className="sheet-section">
+                        <div className="form-group">
                             <label class="text-4">
                                 Select Target Object
                             </label>
@@ -47,7 +47,7 @@ const FilterSettingsModal = ({ observer, initialSettings, onSave, onClose }) => 
                         </div>
 
                         {settings.selectedObject && (
-                            <div class="form-group">
+                            <div className="form-group">
                                 <label class="text-4">Select Filter Fields</label>
                                 <SelectObjectFields
                                     selectedFields={settings.selectedFields}

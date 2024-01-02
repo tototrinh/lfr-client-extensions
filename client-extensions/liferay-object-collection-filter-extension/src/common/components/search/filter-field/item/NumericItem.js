@@ -3,6 +3,14 @@ import {ClayInput} from "@clayui/form";
 
 const NumericItem = ({label, name, onChange, value}) => {
 
+    const handleChange = (event) => {
+        const newValue = event.target.value;
+
+        if (newValue !== '' && !isNaN(newValue)) {
+            onChange(newValue);
+        }
+    };
+
     return (
         <>
             <div className="w-100 input">
@@ -16,7 +24,7 @@ const NumericItem = ({label, name, onChange, value}) => {
                         name={name}
                         type="number"
                         value={value}
-                        onChange={(e) => onChange(event.target.value)}
+                        onChange={handleChange}
                     />
                 </div>
             </div>
