@@ -98,7 +98,7 @@ const Search = () => {
 		if(url !== '') {
 			handleSearch()
 		}
-	}, [delta, page, filters,url]);
+	}, [delta, page, filters, url]);
 
 	return (
 		<div>
@@ -114,9 +114,11 @@ const Search = () => {
                                 <Keywords handleSearchChange={handleSearchKeywordChange} handleSearchSubmit={handleSearch}/>
                                 <div class="form-group">
                                     <FilterForm selectedFields={settings.selectedFields} onUpdateFilter={handleFilterChange} filters={filters}/>
-									<ClayButton displayType="secondary" onClick={resetFilter}>
-										Clear
-									</ClayButton>
+                                    <div class="d-flex justify-content-end">
+                                        <ClayButton displayType="link" onClick={resetFilter}>
+                                            Clear All
+                                        </ClayButton>
+                                    </div>
                                 </div>
                                 {searchResults?.length === 0 && <p>No results found </p>}
                                 {searchResults?.length > 0 &&

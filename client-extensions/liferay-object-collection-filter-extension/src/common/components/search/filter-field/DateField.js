@@ -28,6 +28,7 @@ const DateField = ({fieldName, fieldType, onUpdateFilter,value}) => {
                     end: 2050,
                     start: 1997
                 }}
+                placeholder="YYYY-MM-DD - YYYY-MM-DD"
                 value={dateRange}
                 onChange={(e)=>handleChange(e)}
                 dateFormat={dateFormat}

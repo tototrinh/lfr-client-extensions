@@ -11,7 +11,7 @@ const FilterInput = ({ fieldLabel, fieldName, fieldType, onUpdateFilter, value }
     }[fieldType];
 
     return (
-        <div className="filter-input">
+        <div className="filter-input ml-0">
             <label>{fieldLabel}</label>
             {InputComponent && <InputComponent fieldName={fieldName} fieldType={fieldType} onUpdateFilter={onUpdateFilter} value={value} />}
         </div>
