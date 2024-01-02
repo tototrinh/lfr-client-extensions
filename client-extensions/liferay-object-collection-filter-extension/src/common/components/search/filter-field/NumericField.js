@@ -8,14 +8,14 @@ const NumericField = ({fieldName, fieldType, onUpdateFilter, value}) => {
     const [max, setMax] = useState(0);
 
     useEffect(() => {
-        if(max >= min && max !=0 ) {
+        if (max >= min && max !=0 ) {
             onUpdateFilter(fieldName, fieldType, [min,max]);
         }
 
     }, [min, max]);
 
     useEffect(() => {
-        if(value == null) {
+        if (value == null) {
             setMin(0);
             setMax(0)
         }
@@ -33,9 +33,23 @@ const NumericField = ({fieldName, fieldType, onUpdateFilter, value}) => {
                 </ClayButton>
             }
         >
-            <div class="m-2">
-                <NumericItem name="min" label="Min" fieldName={fieldName} fieldType={fieldType} onChange={setMin} value={min}/>
-                <NumericItem name="max" label="Max" fieldName={fieldName} fieldType={fieldType} onChange={setMax} value={max}/>
+            <div className="m-2">
+                <NumericItem
+                    name="min"
+                    label="Min"
+                    fieldName={fieldName}
+                    fieldType={fieldType}
+                    onChange={setMin}
+                    value={min}
+                />
+                <NumericItem
+                    name="max"
+                    label="Max"
+                    fieldName={fieldName}
+                    fieldType={fieldType}
+                    onChange={setMax}
+                    value={max}
+                />
             </div>
         </ClayDropdown>
     )

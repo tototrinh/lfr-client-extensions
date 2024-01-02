@@ -3,17 +3,14 @@ import ClayButton from '@clayui/button';
 import ClayIcon from "@clayui/icon";
 import { spritemapPath } from "../../services/liferay";
 
-const Keywords = ({handleSearchChange, handleSearchSubmit}) => {
+const Keywords = ({handleChange, keywords}) => {
 	return (
 		<ClayForm.Group>
 			<ClayInput.Group>
-				<ClayInput.GroupItem onChange={handleSearchChange} prepend>
-				<ClayInput placeholder="Search by Keywords" type="text" />
+				<ClayInput.GroupItem onChange={handleChange} prepend>
+				<ClayInput placeholder="Search by Keywords" type="text" value={keywords} />
 				</ClayInput.GroupItem>
 				<ClayInput.GroupItem append shrink>
-				<ClayButton onClick={() => handleSearchSubmit(true)}  displayType="secondary" type="submit">
-					<ClayIcon symbol="search" spritemap={spritemapPath} />
-				</ClayButton>
 				</ClayInput.GroupItem>
 			</ClayInput.Group>
 		</ClayForm.Group>
