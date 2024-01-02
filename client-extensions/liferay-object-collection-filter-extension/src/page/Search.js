@@ -1,5 +1,4 @@
-import React,  { useState, useEffect, Suspense } from 'react';
-
+import React, {useState, useEffect, Suspense} from 'react';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
@@ -16,6 +15,7 @@ import FilterForm from "../common/components/search/FilterForm";
 import SearchResult from '../common/components/search/SearchResult';
 import Keywords from '../common/components/search/Keywords';
 import FilterSettings from "../common/components/setting/FilterSettings";
+import ClayButton from "@clayui/button";
 
 const Search = () => {
 
@@ -76,7 +76,7 @@ const Search = () => {
 		setPage(value);
 	}
 
-	const handleFilterChange = (property, type, values) => {
+	const handleFilterChange =(property, type, values) => {
 		const newFilters = filters.filter((filter) => filter.property !== property);
 
 		if(type && values?.length > 0) {
@@ -88,14 +88,9 @@ const Search = () => {
 		} else {
 			setFilters([...newFilters]);
 		}
-	}
+	};
 
 	const resetFilter = () => {
-		setSettings((prevSettings) => ({
-			...prevSettings,
-			selectedFields: [],
-		}));
-
 		setFilters([]);
 	}
 
@@ -114,14 +109,14 @@ const Search = () => {
                             settings={settings}
                             onSettings={handleSettings}
                         />
-						<ClayButton displayType="secondary" onClick={resetFilter}>
-							Clear
-						</ClayButton>
                         {settings.selectedObject && (
                             <>
                                 <Keywords handleSearchChange={handleSearchKeywordChange} handleSearchSubmit={handleSearch}/>
                                 <div class="form-group">
-                                    <FilterForm selectedFields={settings.selectedFields} onUpdateFilter={handleFilterChange}/>
+                                    <FilterForm selectedFields={settings.selectedFields} onUpdateFilter={handleFilterChange} filters={filters}/>
+									<ClayButton displayType="secondary" onClick={resetFilter}>
+										Clear
+									</ClayButton>
                                 </div>
                                 {searchResults?.length === 0 && <p>No results found </p>}
                                 {searchResults?.length > 0 &&

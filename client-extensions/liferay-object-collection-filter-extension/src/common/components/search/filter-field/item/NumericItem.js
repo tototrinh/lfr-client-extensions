@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {ClayInput} from "@clayui/form";
 
-const NumericItem = ({label, name, onChange}) => {
+const NumericItem = ({label, name, onChange, value}) => {
 
     return (
         <>
@@ -15,6 +15,7 @@ const NumericItem = ({label, name, onChange}) => {
                         id={name}
                         name={name}
                         type="number"
+                        value={value}
                         onChange={(e) => onChange(event.target.value)}
                     />
                 </div>

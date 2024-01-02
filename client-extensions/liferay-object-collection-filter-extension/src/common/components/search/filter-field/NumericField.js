@@ -3,7 +3,7 @@ import ClayDropdown from "@clayui/drop-down";
 import ClayButton from "@clayui/button";
 import NumericItem from "./item/NumericItem";
 
-const NumericField = ({fieldName, fieldType, onUpdateFilter}) => {
+const NumericField = ({fieldName, fieldType, onUpdateFilter, value}) => {
     const [min, setMin] = useState(0);
     const [max, setMax] = useState(0);
 
@@ -13,6 +13,13 @@ const NumericField = ({fieldName, fieldType, onUpdateFilter}) => {
         }
 
     }, [min, max]);
+
+    useEffect(() => {
+        if(value == null) {
+            setMin(0);
+            setMax(0)
+        }
+    }, [value]);
 
     return (
         <ClayDropdown
@@ -27,8 +34,8 @@ const NumericField = ({fieldName, fieldType, onUpdateFilter}) => {
             }
         >
             <div>
-                <NumericItem name="min" label="Min" fieldName={fieldName} fieldType={fieldType} onChange={setMin}/>
-                <NumericItem name="max" label="Max" fieldName={fieldName} fieldType={fieldType} onChange={setMax}/>
+                <NumericItem name="min" label="Min" fieldName={fieldName} fieldType={fieldType} onChange={setMin} value={min}/>
+                <NumericItem name="max" label="Max" fieldName={fieldName} fieldType={fieldType} onChange={setMax} value={max}/>
             </div>
         </ClayDropdown>
     )

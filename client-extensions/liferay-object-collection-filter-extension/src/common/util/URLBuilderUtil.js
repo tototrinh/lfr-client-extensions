@@ -24,19 +24,17 @@ export const getFilter = (filters = []) => {
 };
 
 export const buildParams = (keywords = "", filters = [],page = -1, pageSize = -1) => {
-    const urlSearchParams = new URLSearchParams();
-
-    urlSearchParams.append("filter", getFilter(filters));
+    let searchParams = `filter=${encodeURIComponent(getFilter(filters))}`
 
     if(page >= 0) {
-        urlSearchParams.append("?page", page)
+        searchParams = searchParams + `&page=${page}`
     }
 
     if(pageSize >= 0) {
-        urlSearchParams.append('?pageSize', pageSize)
+        searchParams = searchParams + `&pageSize=${pageSize}`
     }
 
-    urlSearchParams.append("?search", keywords);
+    searchParams = searchParams + `&search=${encodeURIComponent(keywords)}`
 
-    return urlSearchParams.toString().replaceAll("+", "%20");
+    return searchParams;
 };
