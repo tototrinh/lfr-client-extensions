@@ -90,6 +90,15 @@ const Search = () => {
 		}
 	}
 
+	const resetFilter = () => {
+		setSettings((prevSettings) => ({
+			...prevSettings,
+			selectedFields: [],
+		}));
+
+		setFilters([]);
+	}
+
 	useEffect(() => {
 		if(url !== '') {
 			handleSearch()
@@ -105,13 +114,15 @@ const Search = () => {
                             settings={settings}
                             onSettings={handleSettings}
                         />
+						<ClayButton displayType="secondary" onClick={resetFilter}>
+							Clear
+						</ClayButton>
                         {settings.selectedObject && (
                             <>
                                 <Keywords handleSearchChange={handleSearchKeywordChange} handleSearchSubmit={handleSearch}/>
                                 <div class="form-group">
                                     <FilterForm selectedFields={settings.selectedFields} onUpdateFilter={handleFilterChange}/>
                                 </div>
-                                {error && <p>Error: {error}</p>}
                                 {searchResults?.length === 0 && <p>No results found </p>}
                                 {searchResults?.length > 0 &&
                                     <>
