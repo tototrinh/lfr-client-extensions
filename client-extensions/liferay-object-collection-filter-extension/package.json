@@ -12,11 +12,25 @@
     ]
   },
   "dependencies": {
+    "@clayui/alert": "^3.106.1",
+    "@clayui/button": "^3.107.0",
+    "@clayui/core": "3.108.0",
+    "@clayui/css": "^3.108.0",
+    "@clayui/date-picker": "^3.108.0",
+    "@clayui/drop-down": "^3.108.0",
+    "@clayui/form": "^3.107.0",
+    "@clayui/icon": "^3.106.1",
+    "@clayui/layout": "3.106.1",
+    "@clayui/list": "3.93.0",
+    "@clayui/loading-indicator": "3.106.1",
+    "@clayui/modal": "3.107.0",
+    "@clayui/pagination-bar": "3.108.0",
+    "@clayui/provider": "3.93.0",
+    "axios": "1.6.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
-    "sass": "^1.66.1",
-    "react-select": "5.8.0"
+    "sass": "^1.66.1"
   },
   "name": "@liferay/liferay-object-collection-filter-extension",
   "private": true,
